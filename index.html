@@ -2205,6 +2205,37 @@ async function reloadData() {
   }
 }
 
+let publicUpdateInProgress = false;
+
+function setPublicUpdateButtonsBusy(isBusy) {
+  document.querySelectorAll('[onclick="updatePublicDashboard()"]').forEach(btn => {
+    btn.disabled = isBusy;
+    btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+    btn.textContent = isBusy ? '更新中…' : btn.dataset.originalText;
+  });
+}
+
+function formatPublicUpdateResult(result) {
+  const summary = result && result.summary ? result.summary : {};
+  const done = summary.done || 0;
+  const tasks = summary.tasks || 0;
+  const percent = summary.percent || 0;
+  return `公開頁已更新：${done} / ${tasks} 任務（${percent}%）`;
+}
+
+async function waitForPublicUpdateComplete() {
+  for (let i = 0; i < 80; i++) {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const res = await fetch('/api/update-public-dashboard/status', { cache: 'no-store' });
+    const status = await res.json();
+    if (!status.running) {
+      return status.lastResult || status;
+    }
+    setSaveStatus(`公開頁更新仍在執行中… ${i + 1}`, 'ok');
+  }
+  throw new Error('更新仍在執行中，稍後請再看狀態');
+}
+
 async function updatePublicDashboard() {
   setSaveStatus('Public display only', 'ok');
 }
