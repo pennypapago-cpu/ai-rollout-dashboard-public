@@ -504,6 +504,7 @@
   }
   .readonly-banner .btn:hover { background: #ef4444; color: white; }
   body:not(.edit-mode) .readonly-banner { display: flex; }
+
   .public-display .private-action,
   .public-display .edit-mode-btn,
   .public-display .readonly-banner .btn,
@@ -1302,8 +1303,6 @@
 <script>
 const MONTHS = ['2026/04','2026/05','2026/06','2026/07','2026/08','2026/09','2026/10','2026/11','2026/12'];
 
-// ====== Google Sheet 後端設定 ======
-// 公開展示版只讀取資料；不包含任何可寫入後端的 token。
 const PUBLIC_DISPLAY_MODE = true;
 const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzkO6dh4FJ1W-0EhjkK0STWiTMuQ3xuHMDUO6xkYoJVcuBF55eSfiG_8tCnjAcDHZEc/exec';
 const TOKEN_STORAGE_KEY = 'ai_rollout_public_display';
@@ -1742,7 +1741,7 @@ const DEFAULT_DATA = {
       "end": "2026/07",
       "team": "Jeff",
       "color": "#ec4899",
-      "expanded": false,
+      "expanded": true,
       "objective": "HR 自動化著重員工問答、教育訓練、表單流程。最後一個月做全專案 ROI 回顧。",
       "tasks": [
         {
@@ -1756,9 +1755,9 @@ const DEFAULT_DATA = {
         {
           "id": 9,
           "name": "招募與任用",
-          "status": "testing",
+          "status": "done",
           "note": "",
-          "due": "2026-06-19",
+          "due": "2026-06-12",
           "owner": "佩穎"
         },
         {
@@ -1971,7 +1970,7 @@ const DEFAULT_DATA = {
       "end": "2026/12",
       "team": "Penny",
       "color": "#6366f1",
-      "expanded": true,
+      "expanded": false,
       "objective": "尚未明確分類的探索性任務、技術債整理、跨部門整合等。",
       "tasks": [
         {
@@ -2213,7 +2212,7 @@ async function saveData() {
   return;
 }
 
-// ====== 公開展示版：不開放編輯 ======
+// ====== 唯讀 → 點任意欄位跳密碼框 ======
 function promptForPassword() {
   setSaveStatus('公開展示版僅供瀏覽', 'ok');
 }
@@ -3118,6 +3117,30 @@ function taskDueTime(task) {
   return Number.isNaN(parsed) ? Number.POSITIVE_INFINITY : parsed;
 }
 
+function parseDateOnly(value) {
+  if (!value) return null;
+  const parts = String(value).split('-').map(Number);
+  if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function isDateInLastWeek(value) {
+  const target = parseDateOnly(value);
+  if (!target) return false;
+  const today = new Date();
+  const thisWeekStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  thisWeekStart.setDate(thisWeekStart.getDate() - ((thisWeekStart.getDay() + 6) % 7));
+  const lastWeekStart = new Date(thisWeekStart);
+  lastWeekStart.setDate(thisWeekStart.getDate() - 7);
+  return target >= lastWeekStart && target < thisWeekStart;
+}
+
+function isCompletedLastWeek(task) {
+  if (task.status !== 'done') return false;
+  const note = (task.note || '').trim();
+  return /(?:上週|上周)完成/.test(note) || isDateInLastWeek(task.due);
+}
+
 function phaseStatusText(phase) {
   const s = calcPhase(phase);
   if (s.status === 'done') return '已完成';
@@ -3141,6 +3164,9 @@ function renderProjectTracker() {
     .slice()
     .sort((a, b) => taskDueTime(a.task) - taskDueTime(b.task))
     .slice(0, 5);
+  const completedLastWeekTasks = tasks
+    .filter(({ task }) => isCompletedLastWeek(task))
+    .slice(0, 4);
   const missingDue = openTasks.filter(({ task }) => !task.due).length;
   const missingOwner = openTasks.filter(({ task }) => !(task.owner || '').trim()).length;
   const health = projectHealth(stats, missingDue, missingOwner);
@@ -3155,19 +3181,20 @@ function renderProjectTracker() {
     </li>
   `).join('') : '<div class="tracker-empty">目前沒有待辦任務</div>';
 
-  const attentionItems = [
-    missingDue > 0 ? { title: '補齊任務期限', note: `${missingDue} 筆未完成任務沒有期限，會影響逾期與本週追蹤。` } : null,
-    missingOwner > 0 ? { title: '補齊負責人', note: `${missingOwner} 筆未完成任務沒有 owner，會影響責任歸屬。` } : null,
-    data.phases.filter(p => p.team === '待定').length > 0 ? { title: '確認待定部門人力', note: '生產、直營或其它階段若仍待定，主管會較難判斷資源需求。' } : null,
-    stats.pct < 20 ? { title: '建立每週更新節奏', note: '目前整體完成率偏早期，建議每週固定更新狀態、期限與阻礙。' } : null
-  ].filter(Boolean);
-
-  const attentionHTML = attentionItems.length ? attentionItems.map(item => `
-    <li>
-      <strong>${escapeHTML(item.title)}</strong>
-      <span>${escapeHTML(item.note)}</span>
-    </li>
-  `).join('') : '<div class="tracker-empty">目前沒有明顯追蹤缺口</div>';
+  const completedHTML = completedLastWeekTasks.length ? completedLastWeekTasks.map(({ phase, task }) => ({
+      title: task.name,
+      note: `${phaseShortName(phase)} · ${task.due ? task.due : '上週標記'}`
+    })).map(item => `
+      <li>
+        <strong>${escapeHTML(item.title)}</strong>
+        <span>${escapeHTML(item.note)}</span>
+      </li>
+    `).join('') : `
+      <li>
+        <strong>尚未標記上週完成項目</strong>
+        <span>請在任務備註填「上週完成」，或把完成日填在上週。</span>
+      </li>
+    `;
 
   $('project-tracker').innerHTML = `
     <div class="tracker-brief">
@@ -3184,16 +3211,8 @@ function renderProjectTracker() {
       <ul class="tracker-list">${nextTaskHTML}</ul>
     </div>
     <div class="tracker-panel">
-      <h3>需要補齊或確認</h3>
-      <ul class="tracker-list">${attentionHTML}</ul>
-    </div>
-    <div class="tracker-panel">
-      <h3>專案會議建議問法</h3>
-      <ul class="tracker-list">
-        <li><strong>這週完成什麼？</strong><span>用任務狀態與完成數回答。</span></li>
-        <li><strong>下週卡在哪裡？</strong><span>用風險、未填期限與未填負責人回答。</span></li>
-        <li><strong>AI 已經產生什麼成效？</strong><span>用場景狀態、節省工時與品質指標回答。</span></li>
-      </ul>
+      <h3>上週完成什麼</h3>
+      <ul class="tracker-list">${completedHTML}</ul>
     </div>
   `;
 
