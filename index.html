@@ -1179,6 +1179,7 @@
     <div class="side-actions">
       <button class="btn edit-mode-btn private-action" id="edit-mode-btn" onclick="toggleEditMode()">🔒 唯讀</button>
       <button class="btn" onclick="reloadData()">↻ 重新載入</button>
+      <button class="btn btn-primary private-action" onclick="updatePublicDashboard()">🚀 更新公開頁</button>
       <button class="btn btn-primary private-action" onclick="exportJSON()">⬇ 匯出 JSON</button>
       <label class="btn private-action" style="cursor:pointer;">
         ⬆ 匯入 JSON
@@ -1206,6 +1207,7 @@
     <div class="toolbar">
       <button class="btn edit-mode-btn private-action" id="edit-mode-btn-inline" onclick="toggleEditMode()">🔒 唯讀</button>
       <button class="btn" onclick="reloadData()">↻ 重新載入</button>
+      <button class="btn btn-primary private-action" onclick="updatePublicDashboard()">🚀 更新公開頁</button>
       <button class="btn btn-primary private-action" onclick="exportJSON()">⬇ 匯出 JSON</button>
       <label class="btn private-action" style="display:inline-flex;align-items:center;gap:4px;">
         ⬆ 匯入 JSON
@@ -2201,6 +2203,10 @@ async function reloadData() {
   } catch (e) {
     setSaveStatus('載入失敗：' + e.message, 'err');
   }
+}
+
+async function updatePublicDashboard() {
+  setSaveStatus('Public display only', 'ok');
 }
 
 function scheduleSave() {
