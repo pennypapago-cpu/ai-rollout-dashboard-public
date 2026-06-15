@@ -1315,214 +1315,754 @@ function extractTokenFromURL() {
 }
 
 const DEFAULT_DATA = {
-  project: {
-    name: 'AI 導入專案',
-    owner: 'Penny',
-    timeline: '2026/04 - 2026/12（9 個月）',
-    mode: '自建為主',
-    vision: '分七階段循序導入 AI，以自動化取代重複勞動，讓團隊專注在需要人判斷的工作上。'
+  "project": {
+    "name": "AI 導入專案",
+    "owner": "Penny",
+    "timeline": "2026/04 - 2026/12（9 個月）",
+    "mode": "自建為主",
+    "vision": "分七階段循序導入 AI，以自動化取代重複勞動，讓團隊專注在需要人判斷的工作上。"
   },
-  phases: [
+  "phases": [
     {
-      id: 'cs', name: '階段 1：客服',
-      start: '2026/04', end: '2026/05',
-      team: '0 人（AI 全自動）',
-      color: '#3b82f6',
-      expanded: true,
-      objective: '客服離職後由 AI 完全接手，不補人力。驗證 AI 基礎建設（RAG / Query Log / API 整合）能穩定運作。',
-      metrics: [
-        { name: '答對率', target: '≥ 90%' },
-        { name: 'Fallback rate（無法回答率）', target: '< 10%' },
-        { name: '平均首次回覆時間', target: '< 30 秒' },
-        { name: '客訴數', target: '不超過離職前基準' }
+      "id": "cs",
+      "name": "階段 1：客服",
+      "start": "2026/04",
+      "end": "2026/06",
+      "team": "凱軒",
+      "color": "#3b82f6",
+      "expanded": false,
+      "objective": "客服離職後由 AI 完全接手，不補人力。驗證 AI 基礎建設（RAG / Query Log / API 整合）能穩定運作。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "情境擬定及訪談",
+          "status": "done",
+          "note": "",
+          "due": "2026-04-03",
+          "owner": "凱軒"
+        },
+        {
+          "id": 2,
+          "name": "LINE 客服自動回覆串接",
+          "status": "done",
+          "note": "",
+          "due": "2026-04-10",
+          "owner": "凱軒"
+        },
+        {
+          "id": 3,
+          "name": "RAG 知識庫建置",
+          "status": "done",
+          "note": "",
+          "due": "2026-04-17",
+          "owner": "凱軒"
+        },
+        {
+          "id": 4,
+          "name": "電商 MCP & 物流 API 整合",
+          "status": "done",
+          "note": "與通路一起執行",
+          "due": "2026-04-30",
+          "owner": "Aaron"
+        },
+        {
+          "id": 5,
+          "name": "Query Log 系統",
+          "status": "done",
+          "note": "https://dashboard-cake.katchme.life/",
+          "due": "2026-05-30",
+          "owner": "凱軒"
+        },
+        {
+          "id": 6,
+          "name": "答案品質評估機制（每週抽查 + fallback 監控）",
+          "status": "in-progress",
+          "note": "https://docs.google.com/spreadsheets/d/1ifWfjXolxWkn4IpFUN82s_U2a2FBxYiys2DZMcRNX-E/edit?gid=1472588078#gid=1472588078",
+          "due": "2026-06-30",
+          "owner": "凱軒"
+        },
+        {
+          "id": 7,
+          "name": "Escalation 流程：AI 處理不了時通知你介入",
+          "status": "done",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "凱軒"
+        },
+        {
+          "id": 8,
+          "name": "知識庫持續更新 SOP（商品異動、新 FAQ）",
+          "status": "done",
+          "note": "防止 AI 劣化",
+          "due": "2026-06-30",
+          "owner": "凱軒"
+        }
       ],
-      tasks: [
-        { id: 1, name: '情境擬定及訪談', status: 'done', note: '' },
-        { id: 2, name: 'LINE 客服自動回覆串接', status: 'done', note: '' },
-        { id: 3, name: 'RAG 知識庫建置', status: 'done', note: '' },
-        { id: 4, name: '電商 MCP & 物流 API 整合', status: 'in-progress', note: '本週完成' },
-        { id: 5, name: 'Query Log 系統', status: 'todo', note: '下週完成' },
-        { id: 6, name: '答案品質評估機制（每週抽查 + fallback 監控）', status: 'todo', note: '' },
-        { id: 7, name: 'Escalation 流程：AI 處理不了時通知你介入', status: 'todo', note: '' },
-        { id: 8, name: '知識庫持續更新 SOP（商品異動、新 FAQ）', status: 'todo', note: '防止 AI 劣化' }
+      "metrics": [
+        {
+          "name": "答對率",
+          "target": "≥ 90%"
+        },
+        {
+          "name": "Fallback rate（無法回答率）",
+          "target": "< 10%"
+        },
+        {
+          "name": "平均首次回覆時間",
+          "target": "< 30 秒"
+        },
+        {
+          "name": "客訴數",
+          "target": "不超過離職前基準"
+        }
       ],
-      risks: [
-        '知識庫未跟上商品/政策異動 → AI 給錯答案',
-        'Edge case 沒有 escalation 會惡化客訴',
-        'AI 品質下降無人察覺（沒有評估機制的話）'
+      "risks": [
+        "知識庫未跟上商品/政策異動 → AI 給錯答案",
+        "Edge case 沒有 escalation 會惡化客訴",
+        "AI 品質下降無人察覺（沒有評估機制的話）"
       ]
     },
     {
-      id: 'channel', name: '階段 2：通路（Line 禮物 + 團媽）',
-      start: '2026/05', end: '2026/06',
-      team: '3 人',
-      color: '#8b5cf6',
-      expanded: false,
-      objective: '減少訂單處理、客戶訊息、對帳等重複性工作。3 人仍在，但釋出時間專注於選品與客戶關係。',
-      metrics: [
-        { name: '訂單處理時間', target: '減少 ≥ 60%' },
-        { name: '人工對帳工時', target: '減少 ≥ 80%' },
-        { name: '客戶訊息首次回覆時間', target: '< 5 分鐘' },
-        { name: '月營收（觀察指標）', target: '不下滑，期望提升' }
+      "id": "channel",
+      "name": "階段 2：通路（Line 禮物 + 團媽）",
+      "start": "2026/05",
+      "end": "2026/07",
+      "team": "Penny",
+      "color": "#8b5cf6",
+      "expanded": false,
+      "objective": "減少訂單處理、客戶訊息、對帳等重複性工作。3 人仍在，但釋出時間專注於選品與客戶關係。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "通路現況訪談：訪談 3 位同事找出前 10 大重複任務",
+          "status": "done",
+          "note": "",
+          "due": "2026-05-25",
+          "owner": "Penny"
+        },
+        {
+          "id": 3,
+          "name": "訂單資料結構與系統整合規劃-流程圖",
+          "status": "done",
+          "note": "",
+          "due": "2026-06-05",
+          "owner": "Penny"
+        },
+        {
+          "id": 12,
+          "name": "訂單介面",
+          "status": "todo",
+          "note": "",
+          "due": "2026-06-19",
+          "owner": "Penny"
+        },
+        {
+          "id": 13,
+          "name": "訂單API串接方圓",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-03",
+          "owner": "Aaron"
+        },
+        {
+          "id": 5,
+          "name": "團媽訊息範本 + AI 智能推薦商品",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-18",
+          "owner": "Penny"
+        },
+        {
+          "id": 6,
+          "name": "團媽 CRM（客戶分層、歷史訂單）",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-31",
+          "owner": "濃濃"
+        },
+        {
+          "id": 7,
+          "name": "追款作業",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-31",
+          "owner": "Penny"
+        },
+        {
+          "id": 8,
+          "name": "對帳作業",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-31",
+          "owner": "Penny"
+        },
+        {
+          "id": 9,
+          "name": "周報告數據雲端",
+          "status": "todo",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "濃濃"
+        },
+        {
+          "id": 10,
+          "name": "每日業績回報",
+          "status": "todo",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "濃濃"
+        },
+        {
+          "id": 11,
+          "name": "團主分潤簽呈",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-31",
+          "owner": "Penny"
+        },
+        {
+          "id": 15,
+          "name": "codex教學",
+          "status": "done",
+          "note": "",
+          "due": "2026-05-29",
+          "owner": "Penny"
+        }
       ],
-      tasks: [
-        { id: 1, name: '通路現況訪談：訪談 3 位同事找出前 10 大重複任務', status: 'todo', note: '' },
-        { id: 2, name: '流程 SOP 梳理與優先級排序', status: 'todo', note: '' },
-        { id: 3, name: '訂單資料結構與系統整合規劃', status: 'todo', note: '' },
-        { id: 4, name: 'Line Gift 訂單自動擷取與入庫', status: 'todo', note: '' },
-        { id: 5, name: '團媽訊息範本 + AI 智能推薦商品', status: 'todo', note: '' },
-        { id: 6, name: '團媽 CRM（客戶分層、歷史訂單）', status: 'todo', note: '' },
-        { id: 7, name: '自動化對帳機制', status: 'todo', note: '' },
-        { id: 8, name: '2 週試運轉 → 成效量測 → 正式上線', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "訂單處理時間",
+          "target": "減少 ≥ 60%"
+        },
+        {
+          "name": "人工對帳工時",
+          "target": "減少 ≥ 80%"
+        },
+        {
+          "name": "客戶訊息首次回覆時間",
+          "target": "< 5 分鐘"
+        },
+        {
+          "name": "月營收（觀察指標）",
+          "target": "不下滑，期望提升"
+        }
       ],
-      risks: [
-        'Line Gift 平台 API 限制可能卡住某些自動化',
-        '團媽個性化需求難以完全標準化（保留人工介面）',
-        '同事擔心「被取代」的抗拒心理（需溝通）'
+      "risks": [
+        "Line Gift 平台 API 限制可能卡住某些自動化",
+        "團媽個性化需求難以完全標準化（保留人工介面）",
+        "同事擔心「被取代」的抗拒心理（需溝通）"
       ]
     },
     {
-      id: 'purchase', name: '階段 3：採購',
-      start: '2026/07', end: '2026/07',
-      team: '1 人（管理部內）',
-      color: '#10b981',
-      expanded: false,
-      objective: '自動化比價、進貨單、庫存預測，讓採購專注於供應商關係與策略議價。',
-      metrics: [
-        { name: '進貨單產生工時', target: '減少 ≥ 70%' },
-        { name: '缺貨次數 / 月', target: '減少 ≥ 50%' },
-        { name: '比價覆蓋率', target: '100% 主要品項' },
-        { name: '庫存週轉天數', target: '優化 ≥ 15%' }
+      "id": "purchase",
+      "name": "階段 4：採購",
+      "start": "2026/06",
+      "end": "2026/07",
+      "team": "待定",
+      "color": "#10b981",
+      "expanded": false,
+      "objective": "自動化比價、進貨單、庫存預測，讓採購專注於供應商關係與策略議價。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "採購流程訪談與 SOP 梳理",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 2,
+          "name": "供應商資料庫建立（聯絡/條件/歷史價格）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 3,
+          "name": "ERP / 庫存系統串接（取得即時庫存）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 4,
+          "name": "自動比價機制（至少 2 家供應商）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 5,
+          "name": "庫存預測模型（銷售歷史 + 季節性）",
+          "status": "todo",
+          "note": "需 ≥ 6 個月歷史資料",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 6,
+          "name": "PO 自動生成 + 人工審核介面",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 7,
+          "name": "成效量測與迭代",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        }
       ],
-      tasks: [
-        { id: 1, name: '採購流程訪談與 SOP 梳理', status: 'todo', note: '' },
-        { id: 2, name: '供應商資料庫建立（聯絡/條件/歷史價格）', status: 'todo', note: '' },
-        { id: 3, name: 'ERP / 庫存系統串接（取得即時庫存）', status: 'todo', note: '' },
-        { id: 4, name: '自動比價機制（至少 2 家供應商）', status: 'todo', note: '' },
-        { id: 5, name: '庫存預測模型（銷售歷史 + 季節性）', status: 'todo', note: '需 ≥ 6 個月歷史資料' },
-        { id: 6, name: 'PO 自動生成 + 人工審核介面', status: 'todo', note: '' },
-        { id: 7, name: '成效量測與迭代', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "進貨單產生工時",
+          "target": "減少 ≥ 70%"
+        },
+        {
+          "name": "缺貨次數 / 月",
+          "target": "減少 ≥ 50%"
+        },
+        {
+          "name": "比價覆蓋率",
+          "target": "100% 主要品項"
+        },
+        {
+          "name": "庫存週轉天數",
+          "target": "優化 ≥ 15%"
+        }
       ],
-      risks: [
-        '供應商資料不完整（要補齊要花時間）',
-        '庫存預測初期準確率低，需持續調校',
-        'ERP 系統若封閉可能無法串接'
+      "risks": [
+        "供應商資料不完整（要補齊要花時間）",
+        "庫存預測初期準確率低，需持續調校",
+        "ERP 系統若封閉可能無法串接"
       ]
     },
     {
-      id: 'accounting', name: '階段 4：會計',
-      start: '2026/08', end: '2026/08',
-      team: '1 人（管理部內）',
-      color: '#f59e0b',
-      expanded: false,
-      objective: '自動發票辨識、分類記帳、對帳、月結報表。會計從「做帳」轉向「審核與分析」。',
-      metrics: [
-        { name: '發票處理工時', target: '減少 ≥ 80%' },
-        { name: '記帳準確率', target: '≥ 99%' },
-        { name: '月結完成時間', target: '縮短 ≥ 50%' },
-        { name: '異常交易捕捉率', target: '≥ 90%' }
+      "id": "accounting",
+      "name": "階段 5：會計",
+      "start": "2026/08",
+      "end": "2026/08",
+      "team": "待定",
+      "color": "#f59e0b",
+      "expanded": false,
+      "objective": "自動發票辨識、分類記帳、對帳、月結報表。會計從「做帳」轉向「審核與分析」。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "會計流程訪談與會計科目梳理",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 2,
+          "name": "發票 OCR + AI 分類系統",
+          "status": "todo",
+          "note": "二聯/三聯/電子發票",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 3,
+          "name": "記帳規則引擎（自動對應科目）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 4,
+          "name": "銀行對帳自動化（串接銀行 API / CSV 匯入）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 5,
+          "name": "月結報表範本（損益、資產負債）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 6,
+          "name": "異常交易偵測（金額異常、重複入帳）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 7,
+          "name": "稅務申報資料自動產生",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        }
       ],
-      tasks: [
-        { id: 1, name: '會計流程訪談與會計科目梳理', status: 'todo', note: '' },
-        { id: 2, name: '發票 OCR + AI 分類系統', status: 'todo', note: '二聯/三聯/電子發票' },
-        { id: 3, name: '記帳規則引擎（自動對應科目）', status: 'todo', note: '' },
-        { id: 4, name: '銀行對帳自動化（串接銀行 API / CSV 匯入）', status: 'todo', note: '' },
-        { id: 5, name: '月結報表範本（損益、資產負債）', status: 'todo', note: '' },
-        { id: 6, name: '異常交易偵測（金額異常、重複入帳）', status: 'todo', note: '' },
-        { id: 7, name: '稅務申報資料自動產生', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "發票處理工時",
+          "target": "減少 ≥ 80%"
+        },
+        {
+          "name": "記帳準確率",
+          "target": "≥ 99%"
+        },
+        {
+          "name": "月結完成時間",
+          "target": "縮短 ≥ 50%"
+        },
+        {
+          "name": "異常交易捕捉率",
+          "target": "≥ 90%"
+        }
       ],
-      risks: [
-        '發票格式多樣，OCR 初期準確率約 85-90%',
-        '稅務法規變動需持續維護',
-        '金額敏感，錯誤容忍度低，需審核流程'
+      "risks": [
+        "發票格式多樣，OCR 初期準確率約 85-90%",
+        "稅務法規變動需持續維護",
+        "金額敏感，錯誤容忍度低，需審核流程"
       ]
     },
     {
-      id: 'hr', name: '階段 5：HR + 全專案回顧',
-      start: '2026/09', end: '2026/10',
-      team: '1 人（管理部內）',
-      color: '#ec4899',
-      expanded: false,
-      objective: 'HR 自動化著重員工問答、教育訓練、表單流程。最後一個月做全專案 ROI 回顧。',
-      metrics: [
-        { name: 'HR Q&A 自助解決率', target: '≥ 70%' },
-        { name: '訓練素材覆蓋率', target: '100% 主要職務' },
-        { name: '表單流程工時', target: '減少 ≥ 60%' },
-        { name: '全專案節省工時 / 月', target: '明確量化' }
+      "id": "hr",
+      "name": "階段 3：HR + 全專案回顧",
+      "start": "2026/05",
+      "end": "2026/07",
+      "team": "Jeff",
+      "color": "#ec4899",
+      "expanded": false,
+      "objective": "HR 自動化著重員工問答、教育訓練、表單流程。最後一個月做全專案 ROI 回顧。",
+      "tasks": [
+        {
+          "id": 8,
+          "name": "流程訪談與 SOP 梳理",
+          "status": "done",
+          "note": "file:///D:/User/OneDrive/%E6%A1%8C%E9%9D%A2/10_AI/HR/HR%E5%B7%A5%E4%BD%9C%E5%9C%B0%E5%9C%96.html",
+          "due": "2026-05-05",
+          "owner": "Jeff"
+        },
+        {
+          "id": 9,
+          "name": "招募與任用",
+          "status": "testing",
+          "note": "",
+          "due": "2026-06-19",
+          "owner": "佩穎"
+        },
+        {
+          "id": 2,
+          "name": "入職與離職",
+          "status": "in-progress",
+          "note": "",
+          "due": "2026-07-03",
+          "owner": "佩穎"
+        },
+        {
+          "id": 1,
+          "name": "薪資與出勤",
+          "status": "in-progress",
+          "note": "",
+          "due": "2026-07-10",
+          "owner": "佩穎"
+        },
+        {
+          "id": 3,
+          "name": "勞工法規遵循",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-17",
+          "owner": "佩穎"
+        },
+        {
+          "id": 4,
+          "name": "績效管理",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-24",
+          "owner": "佩穎"
+        },
+        {
+          "id": 5,
+          "name": "員工關係福利",
+          "status": "todo",
+          "note": "",
+          "due": "2026-07-31",
+          "owner": "佩穎"
+        },
+        {
+          "id": 6,
+          "name": "教育訓練",
+          "status": "todo",
+          "note": "10 月中旬",
+          "due": "2026-08-14",
+          "owner": "佩穎"
+        },
+        {
+          "id": 7,
+          "name": "人事資料管理",
+          "status": "todo",
+          "note": "",
+          "due": "2026-08-21",
+          "owner": "佩穎"
+        }
       ],
-      tasks: [
-        { id: 1, name: '員工手冊 / 規章知識庫建置', status: 'todo', note: '' },
-        { id: 2, name: '員工 FAQ 機器人（薪資、假勤、福利）', status: 'todo', note: '' },
-        { id: 3, name: '教育訓練素材庫 + AI 測驗', status: 'todo', note: '' },
-        { id: 4, name: '請假 / 費用申請自動化流程', status: 'todo', note: '' },
-        { id: 5, name: '績效與考核流程數位化', status: 'todo', note: '' },
-        { id: 6, name: '全專案 ROI 回顧：節省工時 / 投入成本 / 下一階段規劃', status: 'todo', note: '10 月中旬' },
-        { id: 7, name: '知識庫年度維護 SOP 建立', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "HR Q&A 自助解決率",
+          "target": "≥ 70%"
+        },
+        {
+          "name": "訓練素材覆蓋率",
+          "target": "100% 主要職務"
+        },
+        {
+          "name": "表單流程工時",
+          "target": "減少 ≥ 60%"
+        },
+        {
+          "name": "全專案節省工時 / 月",
+          "target": "明確量化"
+        }
       ],
-      risks: [
-        '員工隱私與資料權限分級',
-        '主觀判斷類事務（考核、勞資）難以完全自動化',
-        'HR 事務量小，ROI 可能不如前面階段'
+      "risks": [
+        "員工隱私與資料權限分級",
+        "主觀判斷類事務（考核、勞資）難以完全自動化",
+        "HR 事務量小，ROI 可能不如前面階段"
       ]
     },
     {
-      id: 'production', name: '階段 6：生產部',
-      start: '2026/11', end: '2026/11',
-      team: '待定',
-      color: '#06b6d4',
-      expanded: false,
-      objective: '（待填寫）生產部 AI 導入目標：自動化排程、品管記錄、產能預測，讓生產端專注於品質與改善。',
-      metrics: [
-        { name: '（待填寫）指標 1', target: '—' },
-        { name: '（待填寫）指標 2', target: '—' },
-        { name: '（待填寫）指標 3', target: '—' }
+      "id": "production",
+      "name": "階段 6：生產部",
+      "start": "2026/01",
+      "end": "2026/11",
+      "team": "佑平",
+      "color": "#06b6d4",
+      "expanded": false,
+      "objective": "（待填寫）生產部 AI 導入目標：自動化排程、品管記錄、產能預測，讓生產端專注於品質與改善。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "折盒紀錄單",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 2,
+          "name": "生產駕駛艙APP化 + 自動規劃生產",
+          "status": "testing",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "佑平"
+        },
+        {
+          "id": 3,
+          "name": "揀貨總表APP化",
+          "status": "testing",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "佑平"
+        },
+        {
+          "id": 4,
+          "name": "原料換算可運用多少天 - 採購",
+          "status": "in-progress",
+          "note": "",
+          "due": "2026-06-19",
+          "owner": "佑平"
+        },
+        {
+          "id": 5,
+          "name": "進貨單HTML帶入庫存",
+          "status": "testing",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "佑平"
+        },
+        {
+          "id": 6,
+          "name": "生產 列管不列帳 申請 - 比照物管 （包材類）",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": "佑平"
+        },
+        {
+          "id": 7,
+          "name": "蛋糕圖片辨識1到7程度",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": "佑平"
+        }
       ],
-      tasks: [
-        { id: 1, name: '生產部流程訪談與 SOP 梳理', status: 'todo', note: '' },
-        { id: 2, name: '生產排程 / 產能預測模型', status: 'todo', note: '' },
-        { id: 3, name: '品管記錄數位化與異常偵測', status: 'todo', note: '' },
-        { id: 4, name: '成效量測與迭代', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "（待填寫）指標 1",
+          "target": "—"
+        },
+        {
+          "name": "（待填寫）指標 2",
+          "target": "—"
+        },
+        {
+          "name": "（待填寫）指標 3",
+          "target": "—"
+        }
       ],
-      risks: [
-        '（待填寫）風險項目'
+      "risks": [
+        "（待填寫）風險項目"
       ]
     },
     {
-      id: 'retail', name: '階段 7：直營部',
-      start: '2026/12', end: '2026/12',
-      team: '待定',
-      color: '#84cc16',
-      expanded: false,
-      objective: '（待填寫）直營部 AI 導入目標：門市營運、排班、顧客關係、銷售分析自動化，讓店長專注於現場服務與團隊帶領。',
-      metrics: [
-        { name: '（待填寫）指標 1', target: '—' },
-        { name: '（待填寫）指標 2', target: '—' },
-        { name: '（待填寫）指標 3', target: '—' }
+      "id": "retail",
+      "name": "階段 7：直營部",
+      "start": "2026/01",
+      "end": "2026/12",
+      "team": "佑平",
+      "color": "#84cc16",
+      "expanded": false,
+      "objective": "（待填寫）直營部 AI 導入目標：門市營運、排班、顧客關係、銷售分析自動化，讓店長專注於現場服務與團隊帶領。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "週報告的簡化 - 門市銷售戰情",
+          "status": "todo",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "佑平"
+        }
       ],
-      tasks: [
-        { id: 1, name: '直營部流程訪談與 SOP 梳理', status: 'todo', note: '' },
-        { id: 2, name: '門市銷售與庫存分析儀表板', status: 'todo', note: '' },
-        { id: 3, name: '排班 / 出勤自動化', status: 'todo', note: '' },
-        { id: 4, name: '顧客 CRM 與回訪提醒', status: 'todo', note: '' },
-        { id: 5, name: '成效量測與迭代', status: 'todo', note: '' }
+      "metrics": [
+        {
+          "name": "（待填寫）指標 1",
+          "target": "—"
+        },
+        {
+          "name": "（待填寫）指標 2",
+          "target": "—"
+        },
+        {
+          "name": "（待填寫）指標 3",
+          "target": "—"
+        }
       ],
-      risks: [
-        '（待填寫）風險項目'
+      "risks": [
+        "（待填寫）風險項目"
       ]
     },
     {
-      id: 'misc', name: '階段 8：其它',
-      start: '2026/12', end: '2026/12',
-      team: '待定',
-      color: '#6366f1',
-      expanded: false,
-      objective: '（待填寫）其它 AI 導入機會：尚未明確分類的探索性任務、技術債整理、跨部門整合等。',
-      metrics: [
-        { name: '（待填寫）指標 1', target: '—' }
+      "id": "misc",
+      "name": "階段 8：其它",
+      "start": "2026/04",
+      "end": "2026/12",
+      "team": "Penny",
+      "color": "#6366f1",
+      "expanded": true,
+      "objective": "尚未明確分類的探索性任務、技術債整理、跨部門整合等。",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "任務提案中台 https://qrcd.org/9uiL",
+          "status": "done",
+          "note": "4/27新增：個人帳密及小新助理 串傳達內容 (產銷和特殊訂單)",
+          "due": "2026-06-12",
+          "owner": "Penny"
+        },
+        {
+          "id": 4,
+          "name": "門巿成本試算表",
+          "status": "testing",
+          "note": "https://tinyurl.com/23meyu67",
+          "due": "2026-06-30",
+          "owner": "Penny"
+        },
+        {
+          "id": 2,
+          "name": "組織圖-主管md",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 3,
+          "name": "全家撈單提醒到貨日",
+          "status": "todo",
+          "note": "",
+          "due": "2026-06-30",
+          "owner": "Penny"
+        },
+        {
+          "id": 5,
+          "name": "起士公爵資料庫",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 6,
+          "name": "資料庫回圈：文字→資料庫→文字→FB/IG/LINE→所有夥伴",
+          "status": "todo",
+          "note": "",
+          "due": "",
+          "owner": ""
+        },
+        {
+          "id": 7,
+          "name": "生產每日看版",
+          "status": "in-progress",
+          "note": "",
+          "due": "2026-06-19",
+          "owner": "Penny"
+        },
+        {
+          "id": 8,
+          "name": "採購的codex教學",
+          "status": "done",
+          "note": "",
+          "due": "2026-06-11",
+          "owner": "Penny"
+        },
+        {
+          "id": 9,
+          "name": "AI：整理會議影片逐字稿與摘要",
+          "status": "done",
+          "note": "",
+          "due": "2026-06-12",
+          "owner": "Penny"
+        },
+        {
+          "id": 10,
+          "name": "新增產銷會議待辦事項分類",
+          "status": "done",
+          "note": "",
+          "due": "2026-06-12",
+          "owner": "Penny"
+        }
       ],
-      tasks: [],
-      risks: [
-        '（待填寫）風險項目'
+      "metrics": [
+        {
+          "name": "",
+          "target": "—"
+        }
+      ],
+      "risks": [
+        "（待填寫）風險項目"
       ]
     }
   ]
